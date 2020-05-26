@@ -1,2 +1,7 @@
+*.1
+*.a
+*.d
 *.o
+*.tgz
+install/*
 sntp
