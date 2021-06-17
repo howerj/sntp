@@ -1,5 +1,5 @@
 CFLAGS=-std=gnu99 -Wall -Wextra -O2
-VERSION=1.0.0
+VERSION=1.0.1
 POOL=europe.pool.ntp.org
 TARGET=sntp
 AR=ar
@@ -40,5 +40,5 @@ dist: install
 
 
 clean:
-	rm -rf *.o *.1 *.d *.tgz ${TARGET} install
+	rm -rf *.o *.1 *.d *.a *.tgz ${TARGET} install
 
