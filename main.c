@@ -5,6 +5,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <stdint.h>
+
+static int fractional_fmt(char s[33], uint32_t v, unsigned base, unsigned dp) {
+	if (!s || base < 2 || base > 10)
+		return -1;
+	s[0] = 0;
+	if (dp < 1)
+		return 0;
+	uint64_t n = v, i = 0;
+	do { /* NB. Rounding mode is truncation */
+		n *= base;
+		s[i++] = ((n >> 32) & 0xFF) + '0';
+		n &= 0xFFFFFFFFul;
+	} while (n && i < dp && i < 32);
+	s[i] = 0;
+	return 0;
+}
 
 int main(int argc, char **argv) {
 	unsigned port = 0;
@@ -25,7 +42,10 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	time_t ts = seconds;
-	if (fprintf(stdout, "%lu.%lu\n", ts, fractional) < 0)
+	char fractional_s[33] = { 0, };
+	if (fractional_fmt(fractional_s, fractional, 10, 3) < 0)
+		return 1;
+	if (fprintf(stdout, "%lu.%s\t", ts, fractional_s) < 0)
 		return 1;
 	char buf[512] = { 0 };
 	struct tm *timeinfo = gmtime(&ts);

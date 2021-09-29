@@ -1,5 +1,5 @@
 CFLAGS=-std=gnu99 -Wall -Wextra -O2
-VERSION=1.0.1
+VERSION=1.1.0
 POOL=europe.pool.ntp.org
 TARGET=sntp
 AR=ar
