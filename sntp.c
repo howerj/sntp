@@ -99,6 +99,7 @@ int sntp(const char *server, unsigned port, unsigned long *seconds, unsigned lon
 	*seconds = 0; 
 	*fractional = 0;
 	unsigned char h[48] = { 0x1b, };
+	/* we could make this stateful and non-blocking if needed */
 	const int fd = establish(server, port ? port : 123, SOCK_DGRAM);
 	if (fd < 0)
 		return -1;
